@@ -1,12 +1,3 @@
-
-
-
-
-
-
-
-
-
 ---
 title: "Incremental Refresh in Power BI"
 date: 2021-03-16T14:45:13-07:00
