@@ -11,6 +11,8 @@ website:
        text: Home
      - about.qmd
      - test1.qmd
+     - text: Blog
+       href: blog.qmd 
 
 format:
   html:

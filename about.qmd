@@ -1,6 +1,31 @@
 ---
-title: "About"
-toc: false
-
-
+title: "Zach Renwick"
+about:
+  template: jolla
+  image: profpic.jpg
+  links:
+    - icon: twitter
+      text: twitter
+      href: https://twitter.com/zachrenwick
+    - icon: github
+      text: Github
+      href: https://github.com/zachrenwick
+    - icon: youtube
+      text: YouTube
+      href: https://www.youtube.com/@ZachRenwickData
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/zachrenwick/
 ---
+
+Zach Renwick is an experienced data professional with extensive data modeling, data visualization and data engineering skills. He currently works at Aritzia as a Senior Analytics Engineer. 
+
+## Experience
+
+Aritzia | Senior Analytics Engineer | Jul 2022 - present
+
+West Fraser | Power BI Developer | Jun 2021 - Jul 2022
+
+Lululemon | Power BI Developer | Aug 2020 - Jun 2021
+
+Best Buy Canada | BI Developer | Sep 2019 - Aug 2020

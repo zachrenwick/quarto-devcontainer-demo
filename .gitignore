@@ -1,23 +1,10 @@
-# system files
-.DS_Store
-Thumbs.db
-
-# vscode
-.vscode
-
-# r
-/renv
+.Rproj.user
 .Rhistory
+.RData
+.Ruserdata
+*.Rproj
 
-# web dev
-/node_modules
-
-# quarto
+.DS_Store
 /.quarto/
 /_site/
-
-# output folder (you may want to exclude files when we publish!)
-/out/*
-!/out
-
 /_freeze/
