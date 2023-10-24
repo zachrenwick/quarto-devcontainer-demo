@@ -3,7 +3,7 @@ title: "Zach Renwick"
 image: profpic.jpg
 toc: false
 about: 
-  template: jolla
+  template: solana
   image-shape: round
   image-width: 20em
   links:
@@ -13,6 +13,6 @@ about:
       href: https://twitter.com/zachrenwick
     - text: "{{< fa brands github size=2x >}}"
       href: https://github.com/zachrenwick
-    - text: Email
+    - text: "{{< fa regular envelope size=2x >}}"
       href: mailto:zach.renwick@gmail.com
 ---
