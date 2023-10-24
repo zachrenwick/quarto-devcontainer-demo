@@ -1,7 +1,20 @@
 project:
   type: website
-  output-dir: out
-  
-# only re-render if the source changes or if we specifically render that file
-execute:
-  freeze: auto
+  output-dir: _site
+
+website:
+  title: "Zach Renwick"
+  navbar:
+   background: primary
+   left:
+     - href: index.qmd
+       text: Home
+     - about.qmd
+     - test1.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+
+editor: visual

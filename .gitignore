@@ -14,7 +14,10 @@ Thumbs.db
 
 # quarto
 /.quarto/
+/_site/
 
 # output folder (you may want to exclude files when we publish!)
 /out/*
 !/out
+
+/_freeze/
