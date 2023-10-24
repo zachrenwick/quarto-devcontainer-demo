@@ -1,0 +1,149 @@
+---
+title: "Visualizing COVID Cases in Canada"
+author: "Zach Renwick"
+date: 2022-03-05T14:45:13-07:00
+toc: true
+format:
+  html:
+    html-math-method: katex
+    code-tools: true
+    self-contained: true
+jupyter: python3
+---
+
+# Creating Interactive Python Visualizations With Plotly and Pandas
+## A Notebook Example of Canadian COVID-19 Cases
+
+Jupyter notebooks make it incredibly easy to rapidly prototype vizualizations and work with data. In this example I wanted to show how you can also make interactive data vizualizations with the Plotly Python library. For the data sourcing and transformations I will use pandas library.
+
+I was absolutely blown away with how little code it took for me to set up some more advanced interactive features such as selectable date ranges and themes. Plotly visuals come with tooltips automatically turned on, so these data viz are not your average static images!
+
+I will then embed the notebook on my website (www.zachrenwick.com). If you want to see a full screen version of the markdown notebook, the link is available in my website directory here: www.zachrenwick.com/customposts/
+
+I've tried to self-document my code with comments, so hopefully it is clear how to accomplish each step. If you have any questions, feel free to reach out.
+
+
+### Steps
+
+
+1. Import COVID 19 confirmed Canada cases from web source
+
+2. Complete data wrangling to transform into required format
+
+3. Vizualize Canadian new COVID cases
+
+
+# Step 1 Import Data
+```{python}
+# Step 1 Import Data
+
+import pandas as pd
+
+# Get the COVID19 Global time series data
+df = pd.read_csv('https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv')
+df = pd.DataFrame(df, columns = ['Country/Region', 'Province/State','Confirmed', 'Date'])
+
+df.head()
+```
+
+# Step 2 Transform data
+```{python}
+# Step 2 Transform data. We need to group by date (as there are multiple provinces in dataset) and also create new metric for new cases. It is currently showing cumulative cases
+
+# Filter for Canada Data only
+# Create variable with TRUE if Country is Canada
+Canadian = df['Country/Region'] == "Canada"
+
+#Remove recovered caves
+new_cases_only = df['Province/State'] != "Recovery aggregated"
+
+# Create variable for dates
+selected_dates = df['Date'] >= '2020-01-10'
+
+# Select all cases where country is Canada and date is in specified range
+canada_data = df[Canadian & selected_dates & new_cases_only]
+
+# Rename columns for Province and Country
+canada_data = canada_data.rename(columns= { "Province/State" : "Province" , "Country/Region" : "Country"} , errors="raise")
+
+# Since there are multiple provinces in current df, we will now group them by day
+canada_df =  canada_data.groupby(["Date"], as_index=False)["Confirmed"].sum()
+
+# Calculate the difference from previous row in dataset (convert from cumulative figures to new cases only)
+daily_covid = canada_df['Confirmed'].diff()
+#daily_covid.head()
+
+canada_df.head()
+```
+
+# Step 3 Vizualize daily new Canadian COVID-19 cases
+```{python}
+# Step 3 Vizualize daily new Canadian COVID-19 cases
+import plotly.graph_objects as go
+
+x = canada_df['Date']
+y = daily_covid
+
+fig = go.Figure(data=go.Scatter(x=x, y=y))
+fig.show()
+```
+
+# Step 3 (b) Improve data vizualization: make date range interactive, remove gridlines for simplicity
+```{python}
+import plotly.express as px
+
+# base code for data viz
+fig = px.bar(x=x, y=daily_covid, template = "simple_white", title='Time Series with Range Slider and Selectors' )
+
+# add in the adjustable date range filter options to viz
+fig.update_xaxes(
+    rangeslider_visible=False, # cleaned up the viz at bottom x axis by removing this
+    rangeselector=dict(
+        buttons=list([
+            dict(count=7, label="Rolling Week", step="day", stepmode="backward"),
+            dict(count=14, label="Rolling 2 Week", step="day", stepmode="backward"),
+            dict(count=1, label="Rolling Month", step="month", stepmode="backward"),
+            dict(count=7*6, label="Rolling 6 Week", step="day", stepmode="backward"),
+            dict(step="all", label = "No Time Filter")
+        ])
+    )
+)
+
+# Apply the title, font and axis properties
+fig.update_layout(
+    title="Confirmed New Canadian COVID-19 Cases",
+    xaxis_title="Date",
+    yaxis_title="Confirmed New Cases",
+    # font=dict(
+    #     family="Arial",
+    #     size=18,
+    #     color="#808080"
+    # )
+)
+
+fig.show()
+```
+
+
+# Canadian Cases by Province
+```{python}
+
+fig = px.line(canada_data, x="Date", y="Confirmed", color='Province', template = 'simple_white', title="Cumulative COVID19 Cases by Province")
+
+# add in the adjustable date range filter options to viz
+fig.update_xaxes(
+    rangeslider_visible=False, # cleaned up the viz at bottom x axis by removing this
+    rangeselector=dict(
+        buttons=list([
+            dict(count=7, label="Rolling Week", step="day", stepmode="backward"),
+            dict(count=14, label="Rolling 2 Week", step="day", stepmode="backward"),
+            dict(count=1, label="Rolling Month", step="month", stepmode="backward"),
+            dict(count=7*6, label="Rolling 6 Week", step="day", stepmode="backward"),
+            dict(step="all", label = "No Time Filter")
+        ])
+    )
+)
+
+
+fig.show()
+```

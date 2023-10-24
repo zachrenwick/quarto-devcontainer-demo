@@ -17,6 +17,8 @@ jobs:
       - name: Install packages (needed for Rmd)
         run: Rscript -e 'install.packages(c("rmarkdown", "knitr", "jsonlite"))'
 
+       #need a python installation with requirements 
+
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
