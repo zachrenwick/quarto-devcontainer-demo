@@ -5,9 +5,6 @@ website:
   title: "Zach Renwick: Data Professional"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
       - href: test1.qmd
         text: Notebook Example
       - test1.qmd

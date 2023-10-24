@@ -1,6 +1,6 @@
 ---
-title: "Quarto HTML Basics"
-author: "Norah Jones"
+title: "Notebook1"
+author: "Zach Renwick"
 date: "March 22nd, 2021"
 toc: true
 format:
